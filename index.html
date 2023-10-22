@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+
+
+
+    <title>Kasper's PC Control Panel</title>
+</head>
+<body>
+    <h1>Kasper's PC Control Panel</h1>
+    
+    <form onsubmit="return confirm('Er du sikker?')" action="request-action" method="post">
+        <input type="submit" name="shutdown" value="Shutdown">
+        <input type="submit" name="start-mc" value="Start-mc">
+        <input type="submit" name="stop-mc" value="Stop-mc">
+        
+        
+    </form>
+    
+    <br>
+    <br>
+
+    <div id="messages">
+    <!-- 
+    
+        </div>
+        <button id="btn">Send</button>
+    -->
+
+
+    <script>
+        const webSocket = new WebSocket(`ws://${location.host}:443/`);
+        webSocket.onmessage = (event) => {
+            console.log(event)
+            document.getElementById('messages').innerHTML += 'Message from server: ' + event.data + "<br>";
+        };
+        /*
+        document.getElementById('btn').onclick = () => {
+            webSocket.send('hello')
+        }
+        */
+    </script>
+
+</body>
+</html>
