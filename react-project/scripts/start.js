@@ -4,8 +4,6 @@
 process.env.BABEL_ENV = 'development';
 process.env.NODE_ENV = 'development';
 process.env.PORT = 3001;
-process.env.FAST_REFRESH = false;
-
 // Makes the script crash on unhandled rejections instead of silently
 // ignoring them. In the future, promise rejections that are not handled will
 // terminate the Node.js process with a non-zero exit code.
@@ -37,6 +35,7 @@ const getClientEnvironment = require('../config/env');
 const react = require(require.resolve('react', { paths: [paths.appPath] }));
 
 const middleware = require("webpack-dev-middleware");
+const webpackHotMiddleware = require('webpack-hot-middleware');
 const express = require("express");
 
 
@@ -124,8 +123,15 @@ checkBrowsers(paths.appPath, isInteractive)
     app.use(
       middleware(compiler, {
         // webpack-dev-middleware options
+        publicPath: config.output.publicPath
       })
     );
+
+    app.use(webpackHotMiddleware(compiler, {
+      log: console.log,
+      path: '/__webpack_hmr',
+      heartbeat: 10 * 1000
+    }));
     
     app.listen(serverConfig.port, () => {
       console.log("Example app listening on port 3000!")
