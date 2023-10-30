@@ -200,7 +200,10 @@ module.exports = function (webpackEnv) {
       : isEnvDevelopment && 'cheap-module-source-map',
     // These are the "entry points" to our application.
     // This means they will be the "root" imports that are included in JS bundle.
-    entry: paths.appIndexJs,
+    entry: //paths.appIndexJs,
+    ['webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
+    // And then the actual application
+    './src/index.js'],
     output: {
       // The build folder.
       path: paths.appBuild,
@@ -612,11 +615,16 @@ module.exports = function (webpackEnv) {
       new webpack.DefinePlugin(env.stringified),
       // Experimental hot reloading for React .
       // https://github.com/facebook/react/tree/main/packages/react-refresh
+
+      /* Homebrew kh
       isEnvDevelopment &&
         shouldUseReactRefresh &&
         new ReactRefreshWebpackPlugin({
           overlay: false,
         }),
+
+      */
+     
       // Watcher doesn't work well if you mistype casing in a path so we use
       // a plugin that prints an error when you attempt to do this.
       // See https://github.com/facebook/create-react-app/issues/240
@@ -747,6 +755,11 @@ module.exports = function (webpackEnv) {
             },
           },
         }),
+      new HtmlWebpackPlugin({
+          title: 'Hot Module Reload'
+      }),
+      new webpack.HotModuleReplacementPlugin(),
+      new webpack.NoEmitOnErrorsPlugin()
     ].filter(Boolean),
     // Turn off performance processing because we utilize
     // our own hints via the FileSizeReporter

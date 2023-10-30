@@ -17,7 +17,7 @@ function MenuItem(props) {
 function Menu() {
   return (
     <div className="Menu">
-      <h1>test</h1>
+      <h1>yo</h1>
       <MenuItem name="Minecraft Server" description="Its a minecraft server" />
     </div>
   )
