@@ -567,6 +567,8 @@ module.exports = function (webpackEnv) {
     },
     plugins: [
       // Generates an `index.html` file with the <script> injected.
+
+      
       new HtmlWebpackPlugin(
         Object.assign(
           {},
@@ -592,6 +594,7 @@ module.exports = function (webpackEnv) {
             : undefined
         )
       ),
+
       // Inlines the webpack runtime script. This script is too small to warrant
       // a network request.
       // https://github.com/facebook/create-react-app/issues/5358
@@ -615,16 +618,11 @@ module.exports = function (webpackEnv) {
       new webpack.DefinePlugin(env.stringified),
       // Experimental hot reloading for React .
       // https://github.com/facebook/react/tree/main/packages/react-refresh
-
-      /* Homebrew kh
       isEnvDevelopment &&
         shouldUseReactRefresh &&
         new ReactRefreshWebpackPlugin({
           overlay: false,
         }),
-
-      */
-     
       // Watcher doesn't work well if you mistype casing in a path so we use
       // a plugin that prints an error when you attempt to do this.
       // See https://github.com/facebook/create-react-app/issues/240
@@ -755,9 +753,11 @@ module.exports = function (webpackEnv) {
             },
           },
         }),
+        /*
       new HtmlWebpackPlugin({
           title: 'Hot Module Reload'
       }),
+      */
       new webpack.HotModuleReplacementPlugin(),
       new webpack.NoEmitOnErrorsPlugin()
     ].filter(Boolean),

@@ -34,7 +34,7 @@ const createDevServerConfig = require('../config/webpackDevServer.config');
 const getClientEnvironment = require('../config/env');
 const react = require(require.resolve('react', { paths: [paths.appPath] }));
 
-const middleware = require("webpack-dev-middleware");
+const webpackDevMiddleware = require("webpack-dev-middleware");
 const webpackHotMiddleware = require('webpack-hot-middleware');
 const express = require("express");
 
@@ -121,7 +121,7 @@ checkBrowsers(paths.appPath, isInteractive)
     const app = express();
 
     app.use(
-      middleware(compiler, {
+      webpackDevMiddleware(compiler, {
         // webpack-dev-middleware options
         publicPath: config.output.publicPath
       })
