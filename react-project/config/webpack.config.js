@@ -641,7 +641,7 @@ module.exports = function (webpackEnv) {
       // - "entrypoints" key: Array of files which are included in `index.html`,
       //   can be used to reconstruct the HTML if necessary
       new WebpackManifestPlugin({
-        fileName: 'asset-manifest.json',
+        fileName: 'manifest.json',
         publicPath: paths.publicUrlOrPath,
         generate: (seed, files, entrypoints) => {
           const manifestFiles = files.reduce((manifest, file) => {
@@ -753,11 +753,6 @@ module.exports = function (webpackEnv) {
             },
           },
         }),
-        /*
-      new HtmlWebpackPlugin({
-          title: 'Hot Module Reload'
-      }),
-      */
       new webpack.HotModuleReplacementPlugin(),
       new webpack.NoEmitOnErrorsPlugin()
     ].filter(Boolean),
