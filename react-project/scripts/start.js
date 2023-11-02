@@ -37,7 +37,7 @@ const react = require(require.resolve('react', { paths: [paths.appPath] }));
 const webpackDevMiddleware = require("webpack-dev-middleware");
 const webpackHotMiddleware = require('webpack-hot-middleware');
 const express = require("express");
-
+const startServer = require("../server/app.js");
 
 const env = getClientEnvironment(paths.publicUrlOrPath.slice(0, -1));
 const useYarn = fs.existsSync(paths.yarnLockFile);
@@ -134,7 +134,7 @@ checkBrowsers(paths.appPath, isInteractive)
     }));
     
     app.listen(serverConfig.port, () => {
-      console.log("Example app listening on port 3000!")
+      console.log("Example app listening on port " + serverConfig.port);
       if (isInteractive) {
         clearConsole();
       }
@@ -146,7 +146,7 @@ checkBrowsers(paths.appPath, isInteractive)
           )
         );
       }
-
+      
       console.log(chalk.cyan('Starting the development server...\n'));
       openBrowser(urls.localUrlForBrowser);
     });
@@ -155,6 +155,7 @@ checkBrowsers(paths.appPath, isInteractive)
     ['SIGINT', 'SIGTERM'].forEach(function (sig) {
       process.on(sig, function () {
         //devServer.close();
+        console.log(startServer)
         console.log("should close express!")
         process.exit();
       });
