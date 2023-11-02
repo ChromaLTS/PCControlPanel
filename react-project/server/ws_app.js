@@ -1,15 +1,8 @@
 const express = require('express');
-const path = require('path');
 const app = express();
 
 const { spawn } = require('node:child_process');
 const { WebSocketServer } = require('ws')
-
-app.use(express.static(path.join(__dirname, '../build')));
-
-app.get('/', function (req, res) {
-  res.sendFile(path.join(__dirname, '../build', 'index.html'));
-});
 
 const sockserver = new WebSocketServer({ port: 443, host: "0.0.0.0" })
 sockserver.on('connection', ws => {
