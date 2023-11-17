@@ -39,12 +39,39 @@
 
 
 
+.App {
+  background: #402b55;
+  width: 100vw;
+  height: 100vh;
+}
 
 
 .Menu {
-
+  background: #8754b9;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: flex-end;
+  overflow: hidden;
 }
 
 .MenuItem {
-  border: #282c34 1px solid;
+  
+}
+
+.MenuItem p{
+  font-weight: bold;
+  cursor: pointer;
+  padding: 0.4rem;
+  margin: 0;
+}
+.gridContainer {
+  display: grid;
+  grid-template-areas: ". content .";
+  grid-template-columns: 1fr 5fr 1fr;
+}
+
+.content {
+  background: #6c4392;
+  grid-area: content;
+  min-height: 45rem;
 }
