@@ -8,10 +8,11 @@ function MenuItem(props) {
     }
   
     return (
-      <div className="MenuItem" onClick={() => handleClick()}>
-         
-         <p className="Title">{props.name}</p>
-      </div>
+      <Link to={props.href}>
+        <div className="MenuItem" onClick={() => handleClick()}>
+          <p className="Title">{props.name}</p>
+        </div>
+      </Link>
     )
   }
   
@@ -19,10 +20,8 @@ function MenuItem(props) {
 function Menu() {
   return (
     <div className="Menu">
-      <MenuItem name="Minecraft Server" description="Its a minecraft server"/>
-      <MenuItem name="Home PC" description="Its a minecraft server"/>
-      <Link to={"/"}>{"test"}</Link>
-      <Link to={"/Minecraft_Server"}>{"test"}</Link>
+      <MenuItem href="/Minecraft_Server" name="Minecraft Server" description="Its a minecraft server"/>
+      <MenuItem href="/Home_Pc" name="Home PC" description="Its a minecraft server"/>
     </div>
   )
 }

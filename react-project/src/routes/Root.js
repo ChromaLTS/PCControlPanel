@@ -1,6 +1,8 @@
 import React, {useRef, useEffect} from 'react';
+import {Outlet} from "react-router-dom";
 import './Root.css';
 import Menu from '../components/Menu';
+
 
 
 
@@ -27,7 +29,7 @@ function Root() {
         <div className='content'>
           <h1>PC Control Panel</h1>
           <br />
-          <button onClick={() => ws.current.send("test")}>test</button>
+          <Outlet />
         </div>
       </div>
     </div>

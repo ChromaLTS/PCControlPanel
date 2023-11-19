@@ -4,11 +4,12 @@ import './index.css';
 import reportWebVitals from './reportWebVitals';
 import {
   createBrowserRouter,
-  RouterProvider,
+  RouterProvider
 } from "react-router-dom";
 
 import Root from './routes/Root';
 import MCServer from './routes/MCServer';
+import HomePC from './routes/HomePC';
 
 
 const router = createBrowserRouter([
@@ -19,6 +20,10 @@ const router = createBrowserRouter([
       {
         path: "Minecraft_Server",
         element: <MCServer />
+      },
+      {
+        path: "Home_PC",
+        element: <HomePC />
       },
     ],
   },
