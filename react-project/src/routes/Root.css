@@ -1,16 +1,33 @@
 @import "theme.css";
 
-.App {
+.Root {
   color: var(--text);
   text-align: center;
 }
 
-.App {
+.Root {
   background: var(--background);
   width: 100vw;
   height: 100vh;
 }
 
+@keyframes hoverMenuItems {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.7;
+  }
+}
+
+@keyframes reversehoverMenuItems {
+  0% {
+    opacity: 0.7;
+  }
+  100% {
+    opacity: 1;
+  }
+}
 
 .Menu {
   display: flex;
@@ -20,11 +37,27 @@
   padding: 0.5rem;
 }
 
+.Menu a{
+  color: var(--text);
+  text-decoration: none;
+}
+
+
 .MenuItem {
   background: var(--secondary);
   margin-left: 0.5rem;
   border-radius: 0.4rem;
   border: 1px solid var(--static);
+}
+
+.MenuItem:hover {
+  animation: hoverMenuItems 0.1s ease-in-out;
+  animation-fill-mode: forwards;
+}
+
+.MenuItem:not(:hover) {
+  animation: reversehoverMenuItems 0.1s ease-in-out;
+  animation-fill-mode: forwards;
 }
 
 .MenuItem p{
@@ -33,6 +66,7 @@
   padding: 0.4rem;
   margin: 0;
 }
+
 .gridContainer {
   display: grid;
   grid-template-areas: ". content .";
