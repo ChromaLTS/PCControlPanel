@@ -1,11 +1,11 @@
 @import "theme.css";
 
-.App {
+.Root {
   color: var(--text);
   text-align: center;
 }
 
-.App {
+.Root {
   background: var(--background);
   width: 100vw;
   height: 100vh;

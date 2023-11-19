@@ -1,10 +1,10 @@
 import React, {useRef, useEffect} from 'react';
-import './App.css';
-import Menu from './components/Menu';
+import './Root.css';
+import Menu from '../components/Menu';
 
 
 
-function App() {
+function Root() {
   const ws = useRef(null);
 
   useEffect(() => {
@@ -21,7 +21,7 @@ function App() {
   }, []);
 
   return (
-    <div className="App">
+    <div className="Root">
       <Menu />
       <div className='gridContainer'>
         <div className='content'>
@@ -34,4 +34,4 @@ function App() {
   );
 }
 
-export default App;
+export default Root;
