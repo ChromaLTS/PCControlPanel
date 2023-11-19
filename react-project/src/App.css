@@ -23,7 +23,7 @@
 .MenuItem {
   background: var(--secondary);
   margin-left: 0.5rem;
-  border-radius: 0.1rem;
+  border-radius: 0.4rem;
   border: 1px solid var(--static);
 }
 
