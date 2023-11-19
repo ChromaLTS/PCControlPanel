@@ -19,7 +19,8 @@
     "react-scripts": "5.0.1"
   },
   "scripts": {
-    "ws": "nodemon ./server/ws_app.js",
+    "ws": "nodemon ./server/ws_raspberrypi.js",
+    "homepc": "nodemon ./server/ws_homepc.js",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

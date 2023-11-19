@@ -7,15 +7,20 @@ import Menu from '../components/Menu';
 
 
 function Root() {
-  const ws = useRef(null);
+  const ws_raspberrypi = useRef(null);
 
   useEffect(() => {
       console.log("connecting")
-      ws.current = new WebSocket(`ws://${window.location.hostname}:8443/`);
-      ws.current.onopen = () => console.log("ws opened");
-      ws.current.onclose = () => console.log("ws closed");
+      ws_raspberrypi.current = new WebSocket(`ws://${window.location.hostname}:8443/`);
+      ws_raspberrypi.current.onopen = () => console.log("ws opened");
+      ws_raspberrypi.current.onclose = () => {
+        console.log("ws closed")
+        setTimeout(() => {
+          ws_raspberrypi.current = new WebSocket(`ws://${window.location.hostname}:8443/`);
+        }, 5000);
+      }
 
-      const wsCurrent = ws.current;
+      const wsCurrent = ws_raspberrypi.current;
 
       return () => {
           wsCurrent.close();
@@ -29,7 +34,7 @@ function Root() {
         <div className='content'>
           <h1>PC Control Panel</h1>
           <br />
-          <Outlet />
+          <Outlet context={[ws_raspberrypi]}/>
         </div>
       </div>
     </div>
