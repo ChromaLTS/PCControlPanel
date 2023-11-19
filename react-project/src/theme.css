@@ -1,0 +1,42 @@
+:root {
+  --static: rgba(0,0,0,0.25);
+}
+
+
+:root[data-theme="light"] {
+    --text: #010903;
+    --background: #dafbe3;
+    --primary: #0b1f60;
+    --secondary: #f7bbe7;
+    --accent: #cda318;
+  }
+:root[data-theme="dark"] {
+    --text: #f6fef8;
+    --background: #04250d;
+    --primary: #9fb3f4;
+    --secondary: #440834;
+    --accent: #e7bd32;
+}
+
+:root[data-theme="homebrew"] {
+    --text: black;
+    --background: #402b55;
+    --primary: #6c4392;
+    --secondary: #8754b9;
+    --accent: #e7bd32;
+}
+
+:root[data-theme="light_cool"] {
+  --text: #051f0c;
+  --background: #dcf9e4;
+  --primary: #230f57;
+  --secondary: #a8f0bc;
+  --accent: #ae471e;
+}
+:root[data-theme="dark_cool"] {
+  --text: #e0fae7;
+  --background: #06230e;
+  --primary: #bca8f0;
+  --secondary: #0f5723;
+  --accent: #e17a51;
+}
