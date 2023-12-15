@@ -53,4 +53,6 @@ function isServerRunning() {
     return mcServer !== undefined;
 }
 
-export {startServer, stopServer, isServerRunning, forceStopServer};
+const Minecraft_Server = {startServer, stopServer, isServerRunning, forceStopServer}
+
+export default Minecraft_Server;

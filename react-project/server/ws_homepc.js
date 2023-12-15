@@ -1,5 +1,5 @@
-const { spawn } = require('node:child_process');
 const { WebSocketServer } = require('ws')
+const { Minecraft_Server } = require('./services/minecraft_server.js')
 
 function msgClientsGen(fromWhatService, wsServer) {
   return function msgClients(msg) {
@@ -11,31 +11,50 @@ function msgClientsGen(fromWhatService, wsServer) {
   }
 }
 
+function runAnyCommand(data)
+{
+  let msgFromHomepc = msgClientsGen('ws_homepc', sockserver)
+  let msgFromMinecraftServer = msgClientsGen('Minecraft_Server', sockserver)
+
+  let servicesCommands = [{
+    serviceName: 'Minecraft_Server',
+    service: Minecraft_Server,
+    commands: [{
+      command: 'startServer',
+      function: Minecraft_Server => Minecraft_Server.startServer(msgFromMinecraftServer)
+    },
+    {
+      command: 'stopServer',
+      function: Minecraft_Server => Minecraft_Server.stopServer(msgFromHomepc)
+    },
+    {
+      command: 'forceStopServer',
+      function: Minecraft_Server => Minecraft_Server.forceStopServer(msgFromHomepc)
+    
+    }]
+  }]
+
+  servicesCommands.forEach(service => {
+    if (service.commands.some(command => command.command === data.command)) {
+      let command = service.commands.find(command => command.command === data.command)
+      command.function(service.service)
+    }
+  })
+
+
+  console.log('received: %s', data)
+}
+
 const sockserver = new WebSocketServer({ port: 443 })
 sockserver.on('connection', ws => {
     console.log('New client connected!')
     ws.send('connection established')
     ws.on('close', () => console.log('Client has disconnected!'))
     ws.on('message', dataString => {
-        data = JSON.parse(dataString)
-        if (data.hasOwnProperty('command')) {
-          console.log({command: data.command})
-          if (data.command === 'startServer') 
-          {
-            startServer(msgClientsGen('Minecraft_Server', sockserver))
-          } 
-          else if (data.command === 'stopServer') 
-          {
-            stopServer(msgClientsGen('ws_homepc', sockserver))
-          } 
-          else if (data.command === 'forceStopServer') 
-          {
-            forceStopServer(msgClientsGen('ws_homepc', sockserver))
-          }
-        }
-        else {
-          console.log('received: %s', data);
-        }
+        let data = JSON.parse(dataString)
+
+        runAnyCommand(data)
+
     })
     ws.onerror = function () {
       console.log('websocket error')
