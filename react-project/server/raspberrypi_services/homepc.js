@@ -24,9 +24,10 @@ function startServer () {
 }
 
 function isServerRunning (ws) {
-    if (ws_homepc.readyState === ws_homepc.OPEN) {
-        ws.send(JSON.stringify({isHomePCServerRunning: true}))
-    }
+  if (ws_homepc.readyState === ws_homepc.OPEN) {
+    let msg = JSON.stringify({isHomePCServerRunning: true})
+    ws.send(msg)
+  }
 }
 
 module.exports = {homepc_connection: {startServer, isServerRunning}}
