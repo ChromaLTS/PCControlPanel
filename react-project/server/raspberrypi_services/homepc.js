@@ -1,19 +1,10 @@
 const { WebSocketServer, WebSocket } = require('ws')
-const { runAnyCommand, msgClientsGen } = require('./functions/ws_util.js')
+const { runAnyCommand, msgClientsGen } = require('../functions/ws_util.js')
 
 const ws_homepc = new WebSocket('ws://192.168.1.12:443');
 
 
-let msgToClients_As_raspberrypi = msgClientsGen('ws_raspberry', sockserver)
-
-let commands = [{
-  serviceName: 'homepc',
-  service: homepc,
-  commands: [{
-    command: 'isHomePCServerRunning',
-    function: isServerRunning()
-  }]
-}]
+//let msgToClients_As_raspberrypi = msgClientsGen('ws_raspberry', sockserver)
 
 
 
@@ -38,6 +29,4 @@ function isServerRunning (ws) {
     }
 }
 
-
-
-module.exports = {homepc_connection: {startServer, isServerRunning, commands}}
+module.exports = {homepc_connection: {startServer, isServerRunning}}

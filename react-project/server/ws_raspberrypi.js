@@ -5,6 +5,16 @@ const { homepc_connection } = require('./raspberrypi_services/homepc.js')
 
 const sockserver = new WebSocketServer({ port: 8443 })
 
+let commands = [{
+  serviceName: 'homepc',
+  service: homepc_connection,
+  commands: [{
+    command: 'isHomePCServerRunning',
+    msgType: "sender",
+    function: ws => homepc_connection.isServerRunning(ws)
+  }]
+}]
+
 
 sockserver.on('connection', ws => {
     console.log('New client connected!')
@@ -12,7 +22,7 @@ sockserver.on('connection', ws => {
     ws.on('close', () => console.log('Client has disconnected!'))
     ws.on('message', dataString => {
       data = JSON.parse(dataString)
-      runAnyCommand(data, homepc_connection.commands)
+      runAnyCommand(data, commands, ws)
     })
     ws.onerror = function () {
       console.log('websocket error')

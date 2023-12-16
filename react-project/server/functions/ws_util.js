@@ -8,13 +8,19 @@ function msgClientsGen(fromWhatService, wsServer) {
     }
 }
 
-
-function runAnyCommand(incomming, servicesCommands)
+function runAnyCommand(incomming, servicesCommands, ws)
 {
   servicesCommands.forEach(service => {
     if (service.commands.some(command => command.command === incomming.command)) {
       let command = service.commands.find(command => command.command === incomming.command)
-      command.function(service.service)
+      if (command.msgType === "sender")
+      {
+        command.function(ws)
+      }
+      else if (command.msgType === "all")
+      {
+        command.function(service.service)
+      }
     }
   })
 
