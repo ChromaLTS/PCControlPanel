@@ -9,9 +9,6 @@ function MCServer(props) {
       command: "isHomePCServerRunning"
     }
     ws_raspberrypi.current.send(JSON.stringify(sendObj))
-    ws_raspberrypi.current.onmessage = function (event) {
-      //console.log(event.data)
-    }
   }
 
   return (

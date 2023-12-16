@@ -10,14 +10,18 @@ function Root() {
   const ws_raspberrypi = useRef(null);
 
   useEffect(() => {
-      console.log("connecting")
+      console.log("connecting 2")
       ws_raspberrypi.current = new WebSocket(`ws://${window.location.hostname}:8443/`);
-      ws_raspberrypi.current.onopen = () => console.log("ws opened");
+      ws_raspberrypi.current.onopen = (ws) => console.log("ws opened", ws);
       ws_raspberrypi.current.onclose = () => {
         console.log("ws closed")
         setTimeout(() => {
           ws_raspberrypi.current = new WebSocket(`ws://${window.location.hostname}:8443/`);
         }, 5000);
+      }
+      
+      ws_raspberrypi.current.onmessage = function (event) {
+        console.log(event)
       }
 
       const wsCurrent = ws_raspberrypi.current;
