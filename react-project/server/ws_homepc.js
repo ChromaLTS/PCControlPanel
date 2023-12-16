@@ -1,51 +1,31 @@
 const { WebSocketServer } = require('ws')
-const { Minecraft_Server } = require('./services/minecraft_server.js')
-
-function msgClientsGen(fromWhatService, wsServer) {
-  return function msgClients(msg) {
-      let objectToClients = {
-        [fromWhatService]: msg
-      }
-
-      wsServer.clients.forEach(client => client.send(JSON.stringify(objectToClients)))
-  }
-}
-
-function runAnyCommand(data)
-{
-  let msgFromHomepc = msgClientsGen('ws_homepc', sockserver)
-  let msgFromMinecraftServer = msgClientsGen('Minecraft_Server', sockserver)
-
-  let servicesCommands = [{
-    serviceName: 'Minecraft_Server',
-    service: Minecraft_Server,
-    commands: [{
-      command: 'startServer',
-      function: Minecraft_Server => Minecraft_Server.startServer(msgFromMinecraftServer)
-    },
-    {
-      command: 'stopServer',
-      function: Minecraft_Server => Minecraft_Server.stopServer(msgFromHomepc)
-    },
-    {
-      command: 'forceStopServer',
-      function: Minecraft_Server => Minecraft_Server.forceStopServer(msgFromHomepc)
-    
-    }]
-  }]
-
-  servicesCommands.forEach(service => {
-    if (service.commands.some(command => command.command === data.command)) {
-      let command = service.commands.find(command => command.command === data.command)
-      command.function(service.service)
-    }
-  })
-
-
-  console.log('received: %s', data)
-}
+const { Minecraft_Server } = require('./homepc_services/minecraft_server.js')
+const { runAnyCommand, msgClientsGen } = require('./functions/ws_util.js')
 
 const sockserver = new WebSocketServer({ port: 443 })
+
+let msgToClients_As_Homepc = msgClientsGen('ws_homepc', sockserver)
+let msgToClients_As_MinecraftServer = msgClientsGen('Minecraft_Server', sockserver)
+
+let servicesCommands = [{
+  serviceName: 'Minecraft_Server',
+  service: Minecraft_Server,
+  commands: [{
+    command: 'startServer',
+    function: Minecraft_Server => Minecraft_Server.startServer(msgToClients_As_MinecraftServer)
+  },
+  {
+    command: 'stopServer',
+    function: Minecraft_Server => Minecraft_Server.stopServer(msgToClients_As_Homepc)
+  },
+  {
+    command: 'forceStopServer',
+    function: Minecraft_Server => Minecraft_Server.forceStopServer(msgToClients_As_Homepc)
+  
+  }]
+}]
+
+
 sockserver.on('connection', ws => {
     console.log('New client connected!')
     ws.send('connection established')
@@ -53,7 +33,7 @@ sockserver.on('connection', ws => {
     ws.on('message', dataString => {
         let data = JSON.parse(dataString)
 
-        runAnyCommand(data)
+        runAnyCommand(data, servicesCommands, ws)
 
     })
     ws.onerror = function () {

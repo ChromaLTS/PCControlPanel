@@ -55,4 +55,4 @@ function isServerRunning() {
 
 const Minecraft_Server = {startServer, stopServer, isServerRunning, forceStopServer}
 
-export default Minecraft_Server;
+module.exports = Minecraft_Server;
