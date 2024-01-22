@@ -1,14 +1,15 @@
 const { WebSocketServer, WebSocket } = require('ws')
 const { runAnyCommand, msgClientsGen } = require('../functions/ws_util.js')
 
-const ws_homepc = new WebSocket('ws://192.168.1.12:443');
 
+let ws_homepc
 
 //let msgToClients_As_raspberrypi = msgClientsGen('ws_raspberry', sockserver)
 
 
 
 function startServer () {
+    ws_homepc = new WebSocket('ws://192.168.1.12:443');
     ws_homepc.on('error', console.error);
 
     ws_homepc.on('open', function open() {

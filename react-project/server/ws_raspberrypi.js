@@ -1,7 +1,9 @@
 const { WebSocketServer, WebSocket } = require('ws')
 const { runAnyCommand, msgClientsGen } = require('./functions/ws_util.js')
 const { homepc_connection } = require('./raspberrypi_services/homepc.js')
+const api = require('./api_raspberyypi.js')
 
+api.init()
 
 const sockserver = new WebSocketServer({ port: 8443 })
 

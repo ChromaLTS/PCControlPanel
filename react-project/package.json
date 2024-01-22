@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@hapi/hapi": "^21.3.2",
+    "dotenv": "^16.3.1",
+    "elliptic": "^6.5.4",
     "express": "^4.18.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -19,6 +22,7 @@
     "react-scripts": "5.0.1"
   },
   "scripts": {
+    "genkey": "node ./server/functions/genKey.js",
     "raspberry": "nodemon ./server/ws_raspberrypi.js",
     "homepc": "nodemon ./server/ws_homepc.js",
     "start": "react-scripts start",
